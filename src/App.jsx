@@ -2,32 +2,35 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Card from './Card.jsx'
+import { suma, exponente, guardar, finalizar, } from './ALU.js'
 
 function App() {
   const [count, setCount] = useState(0)
+  // ((2 ^ 2) + 2) ^ 2 = 36
+  //               suma,      potencia,  suma,      potencia, save,      finalizar,   2,        espacio vacio    
+  let memoria = ["00000110", "00110110","00000110","00110110","01100111","01110000","00000010","00000000"]
+  //console.log(memoria)
+  decode(memoria[0])
 
+  const decodificador = `
+  
+  `
+  
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+        <Card title="Unidad de control" content="">
+        </Card>
+        <Card title="Unidad aritmericologica (ALU)"></Card>
+
+        <Card title="Memoria" content={`${memoria}`}>
+        </Card>
       </div>
       <h1>La suprema calculadora de Von Neumann</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
