@@ -3,7 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Card from './Card.jsx'
-import { suma, exponente, guardar, finalizar, } from './ALU.js'
+import { suma, exponente, guardar } from './ALU.js'
+import {decode} from "./UnidadControl.js"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,9 +14,6 @@ function App() {
   //console.log(memoria)
   decode(memoria[0])
 
-  const decodificador = `
-  
-  `
   
   return (
     <>

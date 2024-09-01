@@ -10,5 +10,8 @@ function exponente(base, exponente ){
 function guardar(numero){
 
 }
+function finalizar(){
 
-export { suma, exponente, guardar};
+}
+
+export { suma, exponente, guardar,finalizar};
