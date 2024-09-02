@@ -1,20 +1,25 @@
-let contador = "0"
-let registroInstrucciones = "0"
-function decode(instruccion){
-    const opCode = instruccion.slice(0, 4);
-    console.log(opCode)
-    if(opCode == "0000"){
-        console.log("suma")
+export class UnidadControl {
+  constructor() {
+    this.decodificador = "";
+    this.contadorPrograma = 0;
+    this.registroInstrucciones = 0;
+  }
+  decode() {
+    const tupla = {}
+    const opCode = this.registroInstrucciones.slice(0, 4);
+    if (opCode == "0000") {
+      tupla['opNombre'] = "suma"
     }
-    if(opCode == "0011"){
-        console.log("potencia")
+    if (opCode == "0011") {
+      tupla['opNombre'] = "potencia"
     }
-    if(opCode == "0111"){
-        console.log("finalizar")
+    if (opCode == "0111") {
+      tupla['opNombre'] = "finalizar"
     }
-    if(opCode == "0110"){
-        console.log("guardar")
+    if (opCode == "0110") {
+      tupla['opNombre'] = "save"
     }
-    
+     tupla['operando'] = this.registroInstrucciones.slice(4,8)
+     return tupla
+  }
 }
-export { decode};

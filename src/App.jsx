@@ -1,36 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Card from './Card.jsx'
-import { suma, exponente, guardar } from './ALU.js'
-import {decode} from "./UnidadControl.js"
+import { useState } from "react";
+import "./App.css";
+import Card from "./Card.jsx";
+import { Memoria } from "./memoria.js";
+import { Alu } from "./ALU.js";
+import { UnidadControl } from "./UnidadControl.js";
 
 function App() {
-  const [count, setCount] = useState(0)
   // ((2 ^ 2) + 2) ^ 2 = 36
-  //               suma,      potencia,  suma,      potencia, save,      finalizar,   2,        espacio vacio    
-  let memoria = ["00000110", "00110110","00000110","00110110","01100111","01110000","00000010","00000000"]
-  //console.log(memoria)
-  decode(memoria[0])
+  const memoria = new Memoria();
+  const alu = new Alu();
+  const unidadControl = new UnidadControl();
+  let opActual = null;
 
-  
+  do {
+    memoria.registroDirecciones = unidadControl.contadorPrograma;
+    memoria.registroDatos = memoria.contenido[memoria.registroDirecciones];
+    unidadControl.registroInstrucciones = memoria.registroDatos;
+    const op = unidadControl.decode();
+    unidadControl.contadorPrograma += 1;
+    opActual = op.opNombre
+    console.log(op)
+  } while (opActual != "finalizar");
+
+
+
   return (
     <>
       <div>
+        <h1>La suprema calculadora de Von Neumann</h1>
+        <Card
+          title="Unidad de control"
+          content={`contador de programa: ${unidadControl.contadorPrograma}. registro de instrucciones: ${unidadControl.registroInstrucciones}. decodificador: {suma}`}
+        ></Card>
+        <Card
+          title="Unidad aritmético lógica (ALU) "
+          content={`acumulador: ${alu.acumulador}. registro de entrada: ${alu.registroEntrada}.`}
+        ></Card>
 
-        <Card title="Unidad de control" content="">
-        </Card>
-        <Card title="Unidad aritmericologica (ALU)"></Card>
+        <Card
+          title="Memoria"
+          content={`registro direcciones: ${memoria.registroDirecciones}. registro datos:${memoria.registroDatos}. contenido de la memoria ${memoria.contenido}`}
+        ></Card>
+      </div>
 
-        <Card title="Memoria" content={`${memoria}`}>
-        </Card>
-      </div>
-      <h1>La suprema calculadora de Von Neumann</h1>
-      <div className="card">
-      </div>
+      <div className="card"></div>
+      <button onClick={() => console.log("yeah")}> siguiente</button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
