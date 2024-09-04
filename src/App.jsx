@@ -51,7 +51,6 @@ function App() {
         break
 
       case 4:
-        console.log('la unidad de control vale ', unidadControl)
         setOp(() => {
 
           const andom = unidadControl.decode()
@@ -76,8 +75,10 @@ function App() {
 
       case 7:
         console.log(eval("alu." + op?.opNombre + "()"));
-        if (op?.opNombre == "guardar") {
-          memoria.contenido[parseInt(op?.operando, 2)] = alu.acumulador;
+        if (op?.opNombre == "save") {
+          let tpm = memoria.contenido
+          tpm[parseInt(op?.operando, 2)] = alu.acumulador
+          setMemoria({ ...memoria, contenido: tpm })
         }
         if (op?.opNombre == "finalizar") {
           break
