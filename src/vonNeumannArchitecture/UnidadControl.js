@@ -22,4 +22,5 @@ export class UnidadControl {
      tupla['operando'] = this.registroInstrucciones.slice(4,8)
      return tupla
   }
+
 }

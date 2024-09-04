@@ -1,26 +1,92 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Card.jsx";
-import { Memoria } from "./memoria.js";
-import { Alu } from "./ALU.js";
-import { UnidadControl } from "./UnidadControl.js";
-
+import { Memoria } from "./vonNeumannArchitecture/memoria.js";
+import { Alu } from "./vonNeumannArchitecture/ALU.js";
+import { UnidadControl } from "./vonNeumannArchitecture/UnidadControl.js";
+//fetch decode and execute
 function App() {
   // ((2 ^ 2) + 2) ^ 2 = 36
-  const memoria = new Memoria();
-  const alu = new Alu();
-  const unidadControl = new UnidadControl();
-  let opActual = null;
+  //const unidadControl = new UnidadControl();
+  const [unidadControl, setUnidadControl] = useState(new UnidadControl());
+  const [memoria, setMemoria] = useState(new Memoria());
+  const [alu, setAlu] = useState(new Alu());
+  const [op, setOp] = useState();
+  const [contador, setContador] = useState(0);
+  const [siguiente, setSiguiente] = useState(true);
 
-  do {
-    memoria.registroDirecciones = unidadControl.contadorPrograma;
-    memoria.registroDatos = memoria.contenido[memoria.registroDirecciones];
-    unidadControl.registroInstrucciones = memoria.registroDatos;
-    const op = unidadControl.decode();
-    unidadControl.contadorPrograma += 1;
-    opActual = op.opNombre
-    console.log(op)
-  } while (opActual != "finalizar");
+
+  useEffect(() => {
+    console.log(`case ${contador}`)
+    switch (contador) {
+      case 0:
+        setMemoria(() => {
+          return ({ ...memoria, registroDirecciones: unidadControl.contadorPrograma })
+        })
+        setContador((contador + 1) % 8)
+        break
+
+      case 1:
+        setUnidadControl(prevObj => {
+          const nuevoObj = Object.create(Object.getPrototypeOf(prevObj))
+          return Object.assign(nuevoObj, prevObj, { contadorPrograma: prevObj.contadorPrograma + 1 })
+        })
+        setContador((contador + 1) % 8)
+        break
+
+      case 2:
+        setMemoria(() => {
+          return { ...memoria, registroDatos: memoria.contenido[parseInt(memoria.registroDirecciones)] }
+        })
+        setContador((contador + 1) % 8)
+        break
+
+      case 3:
+        setUnidadControl(prevObj => {
+          const nuevoObj = Object.create(Object.getPrototypeOf(prevObj))
+          console.log(memoria.registroDatos)
+          return Object.assign(nuevoObj, prevObj, { registroInstrucciones: memoria.registroDatos })
+        })
+        setContador((contador + 1) % 8)
+        break
+
+      case 4:
+        console.log('la unidad de control vale ', unidadControl)
+        setOp(() => {
+
+          const andom = unidadControl.decode()
+          setMemoria({ ...memoria, registroDirecciones: andom.operando })
+          return andom
+        })
+        setContador((contador + 1) % 8)
+        break;
+
+      case 5:
+        setMemoria({ ...memoria, registroDatos: memoria.contenido[parseInt(op?.operando, 2)] })
+        setContador((contador + 1) % 8)
+        break;
+
+      case 6:
+        setAlu(prevObj => {
+          const nuevoObj = Object.create(Object.getPrototypeOf(prevObj))
+          return Object.assign(nuevoObj, prevObj, { registroEntrada: memoria.registroDatos })
+        })
+        setContador((contador + 1) % 8)
+        break;
+
+      case 7:
+        console.log(eval("alu." + op?.opNombre + "()"));
+        if (op?.opNombre == "guardar") {
+          memoria.contenido[parseInt(op?.operando, 2)] = alu.acumulador;
+        }
+        if (op?.opNombre == "finalizar") {
+          break
+        }
+        setContador((contador + 1) % 8)
+        break
+    }
+  }, [siguiente]);
+
 
 
 
@@ -30,7 +96,7 @@ function App() {
         <h1>La suprema calculadora de Von Neumann</h1>
         <Card
           title="Unidad de control"
-          content={`contador de programa: ${unidadControl.contadorPrograma}. registro de instrucciones: ${unidadControl.registroInstrucciones}. decodificador: {suma}`}
+          content={`contador de programa: ${unidadControl.contadorPrograma}. registro de instrucciones: ${unidadControl.registroInstrucciones}. decodificador: ${op?.opNombre}`}
         ></Card>
         <Card
           title="Unidad aritmético lógica (ALU) "
@@ -44,9 +110,14 @@ function App() {
       </div>
 
       <div className="card"></div>
-      <button onClick={() => console.log("yeah")}> siguiente</button>
+      <button onClick={() => setSiguiente(!siguiente)}> siguiente</button>
+      <br></br>
+      <br></br>
+      <button > reiniciar</button >
+
     </>
   );
 }
 
 export default App;
+
