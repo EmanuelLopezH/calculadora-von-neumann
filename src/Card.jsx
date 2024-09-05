@@ -1,5 +1,4 @@
 // src/Card.js
-import React from 'react';
 import styled from 'styled-components';
 
 // Definir el componente de la tarjeta con estilos

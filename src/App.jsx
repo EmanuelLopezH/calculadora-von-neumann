@@ -1,20 +1,26 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Card.jsx";
+import MContainer from "./Mcontainer.jsx";
 import { Memoria } from "./vonNeumannArchitecture/memoria.js";
 import { Alu } from "./vonNeumannArchitecture/ALU.js";
 import { UnidadControl } from "./vonNeumannArchitecture/UnidadControl.js";
 //fetch decode and execute
 function App() {
   // ((2 ^ 2) + 2) ^ 2 = 36
-  //const unidadControl = new UnidadControl();
   const [unidadControl, setUnidadControl] = useState(new UnidadControl());
   const [memoria, setMemoria] = useState(new Memoria());
   const [alu, setAlu] = useState(new Alu());
   const [op, setOp] = useState();
   const [contador, setContador] = useState(0);
   const [siguiente, setSiguiente] = useState(true);
+  const [vector, setvector] = useState(['']);
 
+  useEffect(() => {
+
+
+    setvector(memoria.contenido)
+  }, []);
 
   useEffect(() => {
     console.log(`case ${contador}`)
@@ -89,36 +95,26 @@ function App() {
   }, [siguiente]);
 
 
-
-
   return (
     <>
       <div>
         <h1>La suprema calculadora de Von Neumann</h1>
-        <Card
+        <div id="procesador"> <Card
           title="Unidad de control"
           content={`contador de programa: ${unidadControl.contadorPrograma}. registro de instrucciones: ${unidadControl.registroInstrucciones}. decodificador: ${op?.opNombre}`}
         ></Card>
-        <Card
-          title="Unidad aritmético lógica (ALU) "
-          content={`acumulador: ${alu.acumulador}. registro de entrada: ${alu.registroEntrada}.`}
-        ></Card>
-
-        <Card
-          title="Memoria"
-          content={`registro direcciones: ${memoria.registroDirecciones}. registro datos:${memoria.registroDatos}. contenido de la memoria ${memoria.contenido}`}
-        ></Card>
+          <Card
+            title="Unidad aritmético lógica (ALU) "
+            content={`acumulador: ${alu.acumulador}. registro de entrada: ${alu.registroEntrada}.`}
+          ></Card>
+          </div>
+        <MContainer vector={vector} content={`registro direcciones: ${memoria.registroDirecciones}. registro datos:${memoria.registroDatos}`}></MContainer>
       </div>
-
       <div className="card"></div>
       <button onClick={() => setSiguiente(!siguiente)}> siguiente</button>
-      <br></br>
-      <br></br>
-      <button > reiniciar</button >
-
+      <a href="http://localhost:5173/"><button> reiniciar</button ></a >
     </>
   );
 }
-
 export default App;
 
