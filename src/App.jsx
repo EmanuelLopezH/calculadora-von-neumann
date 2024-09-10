@@ -25,6 +25,7 @@ function App() {
   useEffect(() => {
     console.log(`case ${contador}`)
     switch (contador) {
+      //Actualiza el registro de direcciones de la memoria con el contador de programa de la unidad de control
       case 0:
         setMemoria(() => {
           return ({ ...memoria, registroDirecciones: unidadControl.contadorPrograma })
@@ -32,6 +33,7 @@ function App() {
         setContador((contador + 1) % 8)
         break
 
+      //Aumenta el valor del contador de programa  
       case 1:
         setUnidadControl(prevObj => {
           const nuevoObj = Object.create(Object.getPrototypeOf(prevObj))
@@ -40,6 +42,7 @@ function App() {
         setContador((contador + 1) % 8)
         break
 
+      //Asigna el registro de datos de la memoria con el valor obtenido en memoria[contador de programa]
       case 2:
         setMemoria(() => {
           return { ...memoria, registroDatos: memoria.contenido[parseInt(memoria.registroDirecciones)] }
@@ -47,6 +50,7 @@ function App() {
         setContador((contador + 1) % 8)
         break
 
+      //Asigna al registro de instrucciones de la unidad de control el valor obtenido del registro de datos de la memoria
       case 3:
         setUnidadControl(prevObj => {
           const nuevoObj = Object.create(Object.getPrototypeOf(prevObj))
@@ -55,22 +59,27 @@ function App() {
         })
         setContador((contador + 1) % 8)
         break
-
+      
+      //la unidad de control decodifica lo que tiene en el registro de instrucciones
+      // y le devuelve a la memoria la posición donde esta el operando que se necesita
       case 4:
         setOp(() => {
 
-          const andom = unidadControl.decode()
-          setMemoria({ ...memoria, registroDirecciones: andom.operando })
-          return andom
+          const operation = unidadControl.decode()
+          setMemoria({ ...memoria, registroDirecciones: operation.operando })
+          return operation
         })
         setContador((contador + 1) % 8)
         break;
-
+      
+      //Se setea el registro de datos de la memoria con el operando buscado 
       case 5:
         setMemoria({ ...memoria, registroDatos: memoria.contenido[parseInt(op?.operando, 2)] })
         setContador((contador + 1) % 8)
         break;
-
+      
+        //Se le envia a la ALU el valor del  registro de datos de la memoria y la ALU
+      //lo almacena en su registro de entrada
       case 6:
         setAlu(prevObj => {
           const nuevoObj = Object.create(Object.getPrototypeOf(prevObj))
@@ -78,7 +87,9 @@ function App() {
         })
         setContador((contador + 1) % 8)
         break;
-
+      
+      //Se realiza la operación indicada en la decodificación de la unidad de control
+      //Y se almacena su resultado en el acumulador
       case 7:
         console.log(eval("alu." + op?.opNombre + "()"));
         if (op?.opNombre == "save") {
@@ -117,4 +128,3 @@ function App() {
   );
 }
 export default App;
-
