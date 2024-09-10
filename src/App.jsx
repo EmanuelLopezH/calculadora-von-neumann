@@ -91,7 +91,14 @@ function App() {
       //Se realiza la operación indicada en la decodificación de la unidad de control
       //Y se almacena su resultado en el acumulador
       case 7:
-        console.log(eval("alu." + op?.opNombre + "()"));
+
+        
+        if (op?.opNombre == "+"){
+          console.log(alu.suma());
+        }
+        if (op?.opNombre == "^"){
+          console.log(alu.potencia());
+        }
         if (op?.opNombre == "save") {
           let tpm = memoria.contenido
           tpm[parseInt(op?.operando, 2)] = alu.acumulador

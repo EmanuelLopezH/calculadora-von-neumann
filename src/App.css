@@ -8,7 +8,20 @@
   grid-template-columns: auto auto;
 }
 
-h1{
+h2{
   padding: 0;
   margin: 0;
+}
+
+.flash-red {
+  animation: flash-red 0.5s ease-in-out;
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: red;
+  }
+  100% {
+    background-color: transparent;
+  }
 }

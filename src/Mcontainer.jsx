@@ -17,7 +17,7 @@ const MemoryContainer = styled.div`
 const MContainer = ({ vector, content }) => {
     return (
         <MemoryContainer>
-            <h1>Memoria</h1>
+            <h2>Memoria</h2>
             <p>{content}</p>
             <table>
                 <thead>

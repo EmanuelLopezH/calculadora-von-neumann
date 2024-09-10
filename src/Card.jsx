@@ -26,7 +26,7 @@ const CardContent = styled.p`
 const Card = ({ title, content }) => {
   return (
     <CardContainer>
-      <CardTitle>{title}</CardTitle>
+      <h2>{title}</h2>
       <CardContent>{content}</CardContent>
     </CardContainer>
   );

@@ -8,10 +8,10 @@ export class UnidadControl {
     const tupla = {}
     const opCode = this.registroInstrucciones.slice(0, 4);
     if (opCode == "0000") {
-      tupla['opNombre'] = "suma"
+      tupla['opNombre'] = "+"
     }
     if (opCode == "0011") {
-      tupla['opNombre'] = "potencia"
+      tupla['opNombre'] = "^"
     }
     if (opCode == "0111") {
       tupla['opNombre'] = "finalizar"
