@@ -24,13 +24,13 @@ const Card = ({ contadorPrograma, registroInstrucciones, decodificador }) => {
 
   useEffect(() => {
     setIluminarContador(true);
-    const timer = setTimeout(() => setIluminarContador(false), 1000);
+    const timer = setTimeout(() => setIluminarContador(false), 3000);
     return () => clearTimeout(timer);
   }, [contadorPrograma]);
 
   useEffect(() => {
     setIluminarRegistro(true);
-    const timer = setTimeout(() => setIluminarRegistro(false), 1000);
+    const timer = setTimeout(() => setIluminarRegistro(false), 3000);
     return () => clearTimeout(timer);
   }, [registroInstrucciones]);
 
