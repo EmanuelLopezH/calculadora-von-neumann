@@ -28,6 +28,7 @@ function App() {
   useEffect(() => {
     console.log(`case ${contador}`);
     switch (contador) {
+      //Actualiza el registro de direcciones de la memoria con el contador de programa de la unidad de control
       case 0:
         setMemoria(() => {
           return {
@@ -79,6 +80,7 @@ function App() {
         setContador((contador + 1) % 8);
         break;
 
+      //Se setea el registro de datos de la memoria con el operando buscado
       case 5:
         setMemoria({
           ...memoria,
@@ -87,6 +89,8 @@ function App() {
         setContador((contador + 1) % 8);
         break;
 
+      //Se le envia a la ALU el valor del  registro de datos de la memoria y la ALU
+      //lo almacena en su registro de entrada
       case 6:
         setAlu((prevObj) => {
           const nuevoObj = Object.create(Object.getPrototypeOf(prevObj));
@@ -97,6 +101,8 @@ function App() {
         setContador((contador + 1) % 8);
         break;
 
+      //Se realiza la operación indicada en la decodificación de la unidad de control
+      //Y se almacena su resultado en el acumulador
       case 7:
         if (op?.opNombre == "+") {
           console.log(alu.suma());
