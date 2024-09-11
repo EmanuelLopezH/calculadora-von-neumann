@@ -74,7 +74,7 @@ function App() {
       case 4:
         setOp(() => {
           const andom = unidadControl.decode();
-          setMemoria({ ...memoria, registroDirecciones: andom.operando });
+          setMemoria({ ...memoria, registroDirecciones: parseInt(andom.operando,2) });
           return andom;
         });
         setContador((contador + 1) % 8);
