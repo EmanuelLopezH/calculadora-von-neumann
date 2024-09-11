@@ -75,8 +75,8 @@ function App() {
           const andom = unidadControl.decode();
           setMemoria({
             ...memoria,
-            registroDirecciones: parseInt(andom.operando, 2),
-          });
+            registroDirecciones: parseInt(parseInt(andom.operando, 2),
+         ,2) });
           return andom;
         });
         setContador((contador + 1) % 8);
