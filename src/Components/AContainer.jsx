@@ -8,13 +8,13 @@ function AContainer({ acumulador, rEntrada }) {
 
   useEffect(() => {
     setIluminarAcumulador(true);
-    const timer = setTimeout(() => setIluminarAcumulador(false), 1000);
+    const timer = setTimeout(() => setIluminarAcumulador(false), 3000);
     return () => clearTimeout(timer);
   }, [acumulador]);
 
   useEffect(() => {
     setIluminarREntrada(true);
-    const timer = setTimeout(() => setIluminarREntrada(false), 1000);
+    const timer = setTimeout(() => setIluminarREntrada(false), 3000);
     return () => clearTimeout(timer);
   }, [rEntrada]);
 

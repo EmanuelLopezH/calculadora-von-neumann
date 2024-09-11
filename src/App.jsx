@@ -12,11 +12,10 @@ function App() {
   const [unidadControl, setUnidadControl] = useState(new UnidadControl());
   const [memoria, setMemoria] = useState(new Memoria());
   const [alu, setAlu] = useState(new Alu());
-  const [op, setOp] = useState({ opNombre: "" });
+  const [op, setOp] = useState({ opNombre: "..." });
   const [contador, setContador] = useState(0);
   const [siguiente, setSiguiente] = useState(true);
   const [vector, setvector] = useState([""]);
-
   useEffect(() => {
     document.title = "Arquitectura Von Neumann";
   }, []);
@@ -135,8 +134,17 @@ function App() {
           content={`${memoria.registroDirecciones}`}
           content1={`${memoria.registroDatos}`}
         ></MContainer>
-        <button onClick={() => setSiguiente(!siguiente)}> siguiente</button>
-        <button onClick={() => window.location.reload()}> reiniciar</button>
+        <div className="buts">
+          <button className="next" onClick={() => setSiguiente(!siguiente)}>
+            {" "}
+            Siguiente
+          </button>
+          <button className="restart" onClick={() => window.location.reload()}>
+            {" "}
+            Reiniciar
+          </button>
+        </div>
+
         <div className="casa"></div>
       </div>
       <div className="procesador">

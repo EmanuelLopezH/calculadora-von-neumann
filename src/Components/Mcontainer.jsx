@@ -8,19 +8,24 @@ import { useState, useEffect } from "react";
 const MContainer = ({ vector, content, content1 }) => {
   const [iluminarDirecciones, setIluminarDirecciones] = useState(false);
   const [iluminarDatos, setIluminarDatos] = useState(false);
+  const [imageSrc, setImageSrc] = useState("public/proceso_memoria_8.png");
 
   useEffect(() => {
     // Iluminar el elemento <p> cuando cambie el contenido
     setIluminarDirecciones(true);
-    const timer = setTimeout(() => setIluminarDirecciones(false), 1000); // Remover la clase después de 1 segundo
+    const timer = setTimeout(() => setIluminarDirecciones(false), 3000); // Remover la clase después de 1 segundo
     return () => clearTimeout(timer);
   }, [content]);
   useEffect(() => {
     // Iluminar el elemento <p> cuando cambie el contenido
     setIluminarDatos(true);
-    const timer = setTimeout(() => setIluminarDatos(false), 1000); // Remover la clase después de 1 segundo
+    const timer = setTimeout(() => setIluminarDatos(false), 3000); // Remover la clase después de 1 segundo
     return () => clearTimeout(timer);
   }, [content1]);
+  useEffect(() => {
+    // Actualizar la imagen cuando cambie el contenido
+    setImageSrc(`public/proceso_memoria_${content ? content : 0}.png`);
+  }, [content]);
 
   MContainer.propTypes = {
     vector: PropTypes.array.isRequired,
@@ -40,12 +45,7 @@ const MContainer = ({ vector, content, content1 }) => {
           <p className={`data ${iluminarDirecciones ? "iluminar" : ""}`}>
             {content}
           </p>
-          <img
-            src={`public/proceso_memoria_${0}.png`}
-            alt=""
-            width={90}
-            height={312}
-          />
+          <img src={imageSrc} alt="" width={90} height={312} />
         </div>
         <table>
           <thead>
@@ -71,7 +71,7 @@ const MContainer = ({ vector, content, content1 }) => {
             {content1}
           </p>
           <img
-            src={`public/proceso_memoria_${0}_.png`}
+            src={`public/proceso_memoria_${content ? content : 8}_.png`}
             alt=""
             width={90}
             height={305}

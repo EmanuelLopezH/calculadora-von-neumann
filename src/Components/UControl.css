@@ -34,7 +34,7 @@
 }
 
 .iluminar {
-  animation: iluminar 1s ease-in-out;
+  animation: iluminar 3s ease-in-out;
 }
 
 @keyframes iluminar {
