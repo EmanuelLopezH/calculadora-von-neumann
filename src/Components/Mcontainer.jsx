@@ -31,17 +31,21 @@ const MContainer = ({ vector, content, content1 }) => {
     // <MemoryContainer>
     <div className="memory-container">
       <h4>MEMORIA</h4>
-      <br />
-      <br />
 
       <div className="content">
-        <div>
+        <div className="dir">
           <p>
             R. direcciones: <br />
           </p>
           <p className={`data ${iluminarDirecciones ? "iluminar" : ""}`}>
             {content}
           </p>
+          <img
+            src={`public/proceso_memoria_${0}.png`}
+            alt=""
+            width={90}
+            height={312}
+          />
         </div>
         <table>
           <thead>
@@ -59,13 +63,19 @@ const MContainer = ({ vector, content, content1 }) => {
             ))}
           </tbody>
         </table>
-        <div>
+        <div className="datos">
           <p>
             R. datos: <br />
           </p>
           <p className={`data ${iluminarDatos ? "iluminar" : ""}`}>
             {content1}
           </p>
+          <img
+            src={`public/proceso_memoria_${0}_.png`}
+            alt=""
+            width={90}
+            height={305}
+          />
         </div>
       </div>
     </div>
